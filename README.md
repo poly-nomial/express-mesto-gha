@@ -1,16 +1,15 @@
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
 
+# Проект Mesto бэкенд
 
-## Директории
+Бэкенд проекта "Место". Прописанны пути и контроллеры, с помощью которых осуществляется создание и обновление профилей пользователей, создание и удаление карточек, постановка и снятие лайков.
 
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
+## Технологии
 
-## Запуск проекта
+Express
+MongoDB
+Mongoose
 
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+## Ссылка на репозиторий
+
+https://github.com/poly-nomial/express-mesto-gha
