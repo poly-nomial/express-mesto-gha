@@ -17,12 +17,22 @@ module.exports.getOneUser = (req, res) => {
     .then((user) => {
       if (user === null) {
         res.status(NOT_FOUND_ERROR).send({ message: "Пользователь не найден" });
-      } else {
+      } else if (user !== null) {
         res.status(200).send({ data: user });
+      } else {
+        return;
       }
     })
-    .catch(() => {
-      res.status(SERVER_ERROR).send({ message: "На сервере произошла ошибка" });
+    .catch((err) => {
+      if (err.name === "CastError") {
+        res
+          .status(INPUT_ERROR)
+          .send({ message: "Переданы некорректные данные" });
+      } else {
+        res
+          .status(SERVER_ERROR)
+          .send({ message: "На сервере произошла ошибка" });
+      }
     });
 };
 
