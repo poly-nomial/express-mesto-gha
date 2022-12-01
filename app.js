@@ -5,6 +5,7 @@ const userRouter = require("./routes/users.js");
 const cardRouter = require("./routes/cards.js");
 
 const PORT = 3000;
+const NOT_FOUND_ERROR = 404;
 
 const app = express();
 
@@ -16,8 +17,12 @@ app.use((req, res, next) => {
 
   next();
 });
+
 app.use("/users", userRouter);
 app.use("/cards", cardRouter);
+app.use("/", function (req, res) {
+  res.status(NOT_FOUND_ERROR).send({ message: "Неверный адрес" });
+});
 
 mongoose.connect(
   "mongodb://localhost:27017/mestodb",
