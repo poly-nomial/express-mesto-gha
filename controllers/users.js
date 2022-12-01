@@ -32,7 +32,7 @@ module.exports.createUser = (req, res) => {
     .catch((err) => {
       if (err.errors.name || err.errors.about || err.errors.avatar) {
         res.status(INPUT_ERROR).send({
-          error: "Переданы некорректные данные при создании пользователя",
+          message: "Переданы некорректные данные при создании пользователя",
         });
       } else {
         res
@@ -57,7 +57,7 @@ module.exports.updateProfile = (req, res) => {
     .catch((err) => {
       if (err.errors.name || err.errors.about || err.errors.avatar) {
         res.status(INPUT_ERROR).send({
-          error: "Переданы некорректные данные при обновлении профиля",
+          message: "Переданы некорректные данные при обновлении профиля",
         });
       } else {
         res
@@ -82,7 +82,7 @@ module.exports.updateAvatar = (req, res) => {
     .catch((err) => {
       if (err.errors.name || err.errors.about || err.errors.avatar) {
         res.status(INPUT_ERROR).send({
-          error: "Переданы некорректные данные при обновлении аватара",
+          message: "Переданы некорректные данные при обновлении аватара",
         });
       } else {
         res
