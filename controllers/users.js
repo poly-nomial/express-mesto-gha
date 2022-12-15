@@ -145,7 +145,9 @@ module.exports.login = (req, res) => {
       const token = jwt.sign({ _id: user._id }, "my-secret-friend", {
         expiresIn: "7d",
       });
-      res.cookie("token", token, { maxAge: 3600000, httpOnly: true }).end();
+      res
+        .cookie("token", token, { maxAge: 3600000, httpOnly: true })
+        .send({ token: token });
     })
     .catch((err) => {
       res.status(AUTHORIZATION_ERROR).send({ message: err.message });

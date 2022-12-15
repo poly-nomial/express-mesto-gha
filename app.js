@@ -6,6 +6,7 @@ const userRouter = require("./routes/users");
 const cardRouter = require("./routes/cards");
 const { login, createUser } = require("./controllers/users");
 const auth = require("./middlewares/auth");
+const { errors } = require("celebrate");
 
 const PORT = 3000;
 const NOT_FOUND_ERROR = 404;
@@ -26,6 +27,8 @@ app.use("/cards", cardRouter);
 app.use("/", (req, res) => {
   res.status(NOT_FOUND_ERROR).send({ message: "Неверный адрес" });
 });
+
+app.use(errors());
 
 mongoose.connect(
   "mongodb://localhost:27017/mestodb",

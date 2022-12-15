@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { AUTHORIZATION_ERROR } = require("../utils/constants");
 
 module.exports = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const { token } = req.cookies.token;
 
   if (!token) {
     return res
