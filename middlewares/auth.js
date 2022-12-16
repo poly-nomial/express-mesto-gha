@@ -1,23 +1,20 @@
-const jwt = require("jsonwebtoken");
-const { AUTHORIZATION_ERROR } = require("../utils/constants");
+const jwt = require('jsonwebtoken');
+const { AUTHORIZATION_ERROR } = require('../utils/constants');
+const AuthorizationError = require('../errors/AuthorizationError');
 
 module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    return res
-      .status(AUTHORIZATION_ERROR)
-      .send({ message: "Необходима авторизация" });
+    next(new AuthorizationError('Необходима авторизация'));
   }
 
   let payload;
 
   try {
-    payload = jwt.verify(token, "my-secret-friend");
+    payload = jwt.verify(token, 'my-secret-friend');
   } catch (err) {
-    return res
-      .status(AUTHORIZATION_ERROR)
-      .send({ message: "Необходима авторизация" });
+    next(new AuthorizationError('Необходима авторизация'));
   }
 
   req.user = payload;

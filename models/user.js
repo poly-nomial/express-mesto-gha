@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
+const NotFoundError = require("../errors/NotFoundError");
+const InputError = require("../errors/InputError");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -19,6 +21,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default:
       "https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png",
+    validate: {
+      validator: (v) => {
+        return /^https?:\/\/(www\.)?[\w\-._~:\/?#\[\]@!$&'()*+,;=]+$/.test(v);
+      },
+    },
   },
   email: {
     type: String,
@@ -26,7 +33,6 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: (v) => isEmail(v),
-      message: "Неверный адрес электронной почты",
     },
   },
   password: {
@@ -41,11 +47,13 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     .select("+password")
     .then((user) => {
       if (!user) {
-        return Promise.reject(new Error("Пользователь не найден"));
+        return Promise.reject(new NotFoundError("Пользователь не найден"));
       }
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          return Promise.reject(new Error("Неправильные почта или пароль"));
+          return Promise.reject(
+            new InputError("Неправильные почта или пароль")
+          );
         }
         return user;
       });
