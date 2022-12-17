@@ -4,6 +4,7 @@ const NOT_FOUND_ERROR = 404;
 const AUTHORIZATION_ERROR = 401;
 const CONFLICT_ERROR = 409;
 const URL_REGEX = /^https?:\/\/(www\.)?[\w\-._~:/?#[\]@!$&'()*+,;=]+$/;
+const ID_REGEX = /^[0-9a-f]{24}/;
 
 module.exports = {
   SERVER_ERROR,
@@ -12,4 +13,5 @@ module.exports = {
   AUTHORIZATION_ERROR,
   CONFLICT_ERROR,
   URL_REGEX,
+  ID_REGEX,
 };

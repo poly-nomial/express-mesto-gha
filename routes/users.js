@@ -7,11 +7,19 @@ const {
   updateProfile,
   updateAvatar,
 } = require('../controllers/users');
-const { URL_REGEX } = require('../utils/constants');
+const { URL_REGEX, ID_REGEX } = require('../utils/constants');
 
 userRouter.get('/me', getCurrentUser);
 
-userRouter.get('/:userId', getOneUser);
+userRouter.get(
+  '/:userId',
+  celebrate({
+    params: Joi.object().keys({
+      userId: Joi.string().pattern(ID_REGEX),
+    }),
+  }),
+  getOneUser,
+);
 
 userRouter.get('/', getUsers);
 
