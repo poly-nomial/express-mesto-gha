@@ -21,15 +21,23 @@ cardRouter.post(
   createCard
 );
 cardRouter.delete("/:cardId", deleteCard);
-cardRouter.put("/:cardId/likes", celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().pattern(ID_REGEX);
-  })
-}), likeCard);
-cardRouter.delete("/:cardId/likes", celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().pattern(ID_REGEX);
-  })
-}),unlikeCard);
+cardRouter.put(
+  "/:cardId/likes",
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().pattern(ID_REGEX),
+    }),
+  }),
+  likeCard
+);
+cardRouter.delete(
+  "/:cardId/likes",
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().pattern(ID_REGEX),
+    }),
+  }),
+  unlikeCard
+);
 
 module.exports = cardRouter;
