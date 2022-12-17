@@ -7,7 +7,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const InputError = require('../errors/InputError');
 const ConflictError = require('../errors/ConflictError');
 
-const mongodbDublicateErrorCode = 11000;
+const DublicateErrorCode = 11000;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -73,16 +73,15 @@ module.exports.createUser = (req, res, next) => {
       },
     }))
     .catch((e) => {
-      console.log(e);
       if (e.name === 'ValidationError') {
         throw new InputError('Переданы некорректные данные');
-      } else if (e.code === mongodbDublicateErrorCode) {
+      } else if (e.code === DublicateErrorCode) {
         throw new ConflictError('Пользователь с таким адресом уже существует');
       } else {
         throw new ServerError('На сервере произошла ошибка');
       }
     })
-    .catch(next);
+    .catch((err) => next(err));
 };
 
 module.exports.updateProfile = (req, res, next) => {
