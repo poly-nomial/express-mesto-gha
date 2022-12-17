@@ -74,14 +74,13 @@ module.exports.createUser = (req, res, next) => {
     }))
     .catch((e) => {
       if (e.name === 'ValidationError') {
-        throw new InputError('Переданы некорректные данные');
+        next(new InputError('Переданы некорректные данные'));
       } else if (e.code === DublicateErrorCode) {
-        throw new ConflictError('Пользователь с таким адресом уже существует');
+        next(new ConflictError('Пользователь с таким адресом уже существует'));
       } else {
-        throw new ServerError('На сервере произошла ошибка');
+        next(new ServerError('На сервере произошла ошибка'));
       }
-    })
-    .catch((err) => next(err));
+    });
 };
 
 module.exports.updateProfile = (req, res, next) => {
