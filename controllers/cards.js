@@ -41,7 +41,10 @@ module.exports.deleteCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === "CastError") {
         next(new InputError("Переданы некорректные данные"));
-      } else if (err.name === "NotFoundError" || "ForbiddenError") {
+      } else if (
+        err.name === "NotFoundError" ||
+        err.name === "ForbiddenError"
+      ) {
         next(err);
       } else {
         next(new ServerError("На сервере произошла ошибка"));
