@@ -1,5 +1,4 @@
 const Card = require('../models/card');
-const { INPUT_ERROR } = require('../utils/constants');
 const ServerError = require('../errors/ServerError');
 const NotFoundError = require('../errors/NotFoundError');
 const InputError = require('../errors/InputError');
@@ -39,7 +38,7 @@ module.exports.deleteCard = (req, res, next) => {
       if (err.name === 'CastError') {
         next(new InputError('Переданы некорректные данные'));
       } else if (err.name === 'NotFoundError') {
-        next(e);
+        next(err);
       } else {
         next(new ServerError('На сервере произошла ошибка'));
       }
@@ -63,7 +62,7 @@ module.exports.likeCard = (req, res, next) => {
       if (err.name === 'CastError') {
         next(new InputError('Переданы некорректные данные'));
       } else if (err.name === 'NotFoundError') {
-        next(e);
+        next(err);
       } else {
         next(new ServerError('На сервере произошла ошибка'));
       }
@@ -87,7 +86,7 @@ module.exports.unlikeCard = (req, res, next) => {
       if (err.name === 'CastError') {
         next(new InputError('Переданы некорректные данные'));
       } else if (err.name === 'NotFoundError') {
-        next(e);
+        next(err);
       } else {
         next(new ServerError('На сервере произошла ошибка'));
       }

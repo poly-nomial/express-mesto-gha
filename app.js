@@ -17,7 +17,16 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use('/signin', login);
+app.use(
+  '/signin',
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    }),
+  }),
+  login,
+);
 app.use(
   '/signup',
   celebrate({
