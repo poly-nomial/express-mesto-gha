@@ -20,7 +20,15 @@ cardRouter.post(
   }),
   createCard
 );
-cardRouter.delete("/:cardId", deleteCard);
+cardRouter.delete(
+  "/:cardId",
+  celebrate({
+    params: Joi.object().keys({
+      cardId: Joi.string().pattern(ID_REGEX),
+    }),
+  }),
+  deleteCard
+);
 cardRouter.put(
   "/:cardId/likes",
   celebrate({
